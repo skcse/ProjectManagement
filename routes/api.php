@@ -18,3 +18,5 @@ use Illuminate\Http\Request;
 //});
 
 Route::get('/register','UserController@register');
+
+Route::get('/team/create','TeamController@create')->middleware('BasicAuth');
