@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::post('/user/register','UserController@register');
 
-Route::patch('/user/{user}','UserController@update');
+Route::patch('/user/{user}','UserController@update')->middleware('BasicAuth');
 
 Route::post('/team/create','TeamController@store')->middleware('BasicAuth');
 

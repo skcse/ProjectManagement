@@ -25,6 +25,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $this->authorize('update',$user);
         if($request->has('role'))
         {
             $user->role = $request['role'];
