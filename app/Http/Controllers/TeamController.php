@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Team;
+
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -24,7 +25,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return "HI there!";
+
     }
 
     /**
@@ -35,7 +36,14 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create',Team::class);
+        $auth = $request->validate([
+            'teamName' =>'required',
+            'leadUser_id' =>'required',
+        ]);
+        $team = new Team;
+        $team->create($auth);
+        return "Team Created!!";
     }
 
     /**
@@ -46,7 +54,8 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
-        //
+        $this->authorize('view',$team);
+        return $team;
     }
 
     /**
@@ -69,7 +78,13 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        //
+        $this->authorize('update',$team);
+        $auth =$request->validate([
+            'teamName' => 'required',
+            'leadUser_id' => 'required'
+        ]);
+        $team->update($auth);
+        return "Team Updated";
     }
 
     /**

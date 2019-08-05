@@ -19,10 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->binary('password');
-            $table->unsignedInteger('teamId')->default(0);
+            $table->unsignedInteger('team_id')->default(0);
             $table->unsignedInteger('role')->default(0);
             $table->rememberToken();
             $table->timestamps();
+//            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 

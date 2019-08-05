@@ -17,6 +17,12 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::get('/register','UserController@register');
+Route::post('/user/register','UserController@register');
 
-Route::get('/team/create','TeamController@create')->middleware('BasicAuth');
+Route::patch('/user/{user}','UserController@update');
+
+Route::post('/team/create','TeamController@store')->middleware('BasicAuth');
+
+Route::get('/team/{team}','TeamController@show')->middleware('BasicAuth');
+
+Route::patch('/team/{team}','TeamController@update')->middleware('BasicAuth');

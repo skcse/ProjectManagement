@@ -22,4 +22,18 @@ class UserController extends Controller
         $user->save();
         return "User Registered";
     }
+
+    public function update(Request $request, User $user)
+    {
+        if($request->has('role'))
+        {
+            $user->role = $request['role'];
+        }
+        if($request->has('team_id'))
+        {
+            $user->team_id = $request['team_id'];
+        }
+        $user->save();
+        return "User details updated (only role and team_id can be updated by admin)";
+    }
 }
