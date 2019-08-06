@@ -43,4 +43,11 @@ class UserController extends Controller
             \Mail::to($user)->send(new Welcome);
             return "Mail sent";
     }
+    public function projects()
+    {
+        $user = auth()->user();
+        $projects=  $user->projects;
+        $projectsName = $projects->map->only(['name']);
+        return $projectsName;
+    }
 }

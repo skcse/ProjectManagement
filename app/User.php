@@ -37,4 +37,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
+    public function invited()
+    {
+        return $this->belongsToMany(Invitation::class,'sender_id','id');
+    }
+    public function invitation()
+    {
+        return $this->belongsToMany(Invitation::class,'receiver_id','id');
+    }
 }

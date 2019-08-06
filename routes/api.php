@@ -21,6 +21,8 @@ Route::post('/user/register','UserController@register');
 
 Route::patch('/user/{user}','UserController@update')->middleware('BasicAuth');
 
+Route::get('/user/projects','UserController@projects')->middleware('BasicAuth');
+
 Route::post('/team/create','TeamController@store')->middleware('BasicAuth');
 
 Route::get('/team/{team}','TeamController@show')->middleware('BasicAuth');
@@ -37,9 +39,9 @@ Route::patch('/project/{project}','ProjectController@update')->middleware('Basic
 
 Route::get('/project/{project}','ProjectController@show')->middleware('BasicAuth');
 
-Route::post('/project/{project}/addmember','ProjectController@addmember')->middleware('BasicAuth');
+Route::post('/project/{project}/addMember','ProjectController@addmember')->middleware('BasicAuth');
 
-Route::get('/project/{project}/showmember','ProjectController@showmember')->middleware('BasicAuth');
+Route::get('/project/{project}/showMember','ProjectController@showmember')->middleware('BasicAuth');
 
 Route::get('/mail/{user}','UserController@userMail')->middleware('BasicAuth');
 

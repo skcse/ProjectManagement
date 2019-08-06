@@ -105,18 +105,38 @@ class ProjectController extends Controller
         $auth = $request->validate([
             'user_id'=> 'required'
         ]);
-        $projectmember = new Projectmember([
-            'user_id'=>$auth['user_id'],
-            'project_id'=>$project->id,
-        ]);
-        $projectmember->save();
-        return "Project member mapped";
+        $project->users()->attach($auth['user_id']);
+        return "member added";
     }
+
     public function showMember(Project $project)
     {
 //        dd(auth()->user()->team_id);
         $this->authorize('showMember',$project);
-        $projectmember = Projectmember::all();
-        return $projectmember;
+        $users = $project->users;
+        $usersName =$users->map->only(['name']);
+        return $usersName;
     }
+
+
+//    public function addMember(Project $project, Request $request)
+//    {
+//        $this->authorize('addMember',$project);
+//        $auth = $request->validate([
+//            'user_id'=> 'required'
+//        ]);
+//        $projectmember = new Projectmember([
+//            'user_id'=>$auth['user_id'],
+//            'project_id'=>$project->id,
+//        ]);
+//        $projectmember->save();
+//        return "Project member mapped";
+//    }
+//    public function showMember(Project $project)
+//    {
+////        dd(auth()->user()->team_id);
+//        $this->authorize('showMember',$project);
+//        $projectmember = Projectmember::all();
+//        return $projectmember;
+//    }
 }

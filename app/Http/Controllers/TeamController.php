@@ -108,6 +108,7 @@ class TeamController extends Controller
     {
         $this->authorize('showProject',$team);
         $teamProject = $team->projects;
-        return $teamProject->map->only(['name']);
+        $teamProjectName = $teamProject->map->only(['name']);
+        return $teamProjectName;
     }
 }
