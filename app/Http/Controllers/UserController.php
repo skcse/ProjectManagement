@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Welcome;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -36,5 +37,10 @@ class UserController extends Controller
         }
         $user->save();
         return "User details updated (only role and team_id can be updated by admin)";
+    }
+    public function userMail(User $user)
+    {
+            \Mail::to($user)->send(new Welcome);
+            return "Mail sent";
     }
 }

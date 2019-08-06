@@ -97,4 +97,17 @@ class TeamController extends Controller
     {
         //
     }
+
+    public function showMember(Team $team)
+    {
+        $this->authorize('showMember',$team);
+        $teamMember = $team->users;
+        return $teamMember->map->only(['name']);
+    }
+    public function showProject(Team $team)
+    {
+        $this->authorize('showProject',$team);
+        $teamProject = $team->projects;
+        return $teamProject->map->only(['name']);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Projectmember;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -96,5 +97,26 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function addMember(Project $project, Request $request)
+    {
+        $this->authorize('addMember',$project);
+        $auth = $request->validate([
+            'user_id'=> 'required'
+        ]);
+        $projectmember = new Projectmember([
+            'user_id'=>$auth['user_id'],
+            'project_id'=>$project->id,
+        ]);
+        $projectmember->save();
+        return "Project member mapped";
+    }
+    public function showMember(Project $project)
+    {
+//        dd(auth()->user()->team_id);
+        $this->authorize('showMember',$project);
+        $projectmember = Projectmember::all();
+        return $projectmember;
     }
 }

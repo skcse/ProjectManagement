@@ -91,4 +91,14 @@ class TeamPolicy
     {
         //
     }
+
+    public function showMember(User $user, Team $team)
+    {
+//        dd("show<MM");
+        return $user->team_id == $team->id;
+    }
+    public function showProject(User $user, Team $team)
+    {
+        return $user->team_id == $team->id;
+    }
 }
