@@ -10,36 +10,23 @@ use Illuminate\Http\Request;
 
 class InvitationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Project $project, User $user, Request $request)
     {
+        $this->authorize('create',Invitation::class);
+        $this->authorize('view',$project);
         $invite = new Invitation();
-//        dd($user->id);
         $invite->receiver_id = $user->id;
         $invite->sender_id = auth()->user()->id;
         $invite->project_id = $project->id;
@@ -48,48 +35,50 @@ class InvitationController extends Controller
         return "Invited!!";
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Invitation  $invitation
-     * @return \Illuminate\Http\Response
-     */
     public function show(Invitation $invitation)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Invitation  $invitation
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Invitation $invitation)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Invitation  $invitation
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Invitation $invitation)
     {
         //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Invitation  $invitation
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Invitation $invitation)
     {
-        //
+
+    }
+
+    public function accept_invitation(Invitation $invitation)
+    {
+        $this->authorize('view',$invitation);
+        $user=auth()->user();
+
+        $invitation->status='accepted';
+        $invitation->save();
+        $user->projects()->attach($invitation->project_id);
+        return "Invitation accepted!!";
+    }
+
+    public function reject_invitation(Invitation $invitation)
+    {
+        $this->authorize('view',$invitation);
+        $user=auth()->user();
+
+        $invitation->status='rejected';
+        $invitation->save();
+        return "Invitation reject!!";
+    }
+
+    public function showInvitations()
+    {
+        $user = auth()->user();
+        return response()->json(['Invitations' => $user->invitations]);
     }
 }

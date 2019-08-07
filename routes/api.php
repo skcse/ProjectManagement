@@ -30,8 +30,17 @@ Route::get('/user/projects','UserController@projects')->middleware('BasicAuth');
 //user can view his invitations
 Route::get('/user/invitations/{user}','UserController@invitations')->middleware('BasicAuth');
 
-//lead can see his the invites he sent
+//lead can see his the invites he sent (W)
 Route::get('/user/invites','UserController@invited')->middleware('BasicAuth');
+
+//user can see his invitation (W)
+Route::get('/user/invitation','InvitationController@showInvitations')->middleware('BasicAuth');
+
+//user can accept his invitation (W)
+Route::get('/user/invitation/{invitation}/accept','InvitationController@accept_invitation')->middleware('BasicAuth');
+
+//user can reject his invitation (W)
+Route::get('/user/invitation/{invitation}/reject','InvitationController@reject_invitation')->middleware('BasicAuth');
 
 //admin will create a team (W)
 Route::post('/team/create','TeamController@store')->middleware('BasicAuth');
