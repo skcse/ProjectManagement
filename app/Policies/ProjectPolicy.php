@@ -10,11 +10,7 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         //
@@ -37,7 +33,6 @@ class ProjectPolicy
     }
     public function view(User $user, Project $project)
     {
-//        dd("hi");
 //        return $user->team_id == $project->team_id;
         return $project->users->contains($user);
     }
@@ -54,7 +49,6 @@ class ProjectPolicy
     }
     public function showMember(User $user, Project $project)
     {
-//        dd("show");
 //        return $user->team_id == $project->team_id;
         return $project->users->contains($user);
     }
