@@ -38,7 +38,8 @@ class ProjectPolicy
     public function view(User $user, Project $project)
     {
 //        dd("hi");
-        return $user->team_id == $project->team_id;
+//        return $user->team_id == $project->team_id;
+        return $project->users->contains($user);
     }
     public function addMember(User $user, Project $project)
     {
@@ -54,6 +55,9 @@ class ProjectPolicy
     public function showMember(User $user, Project $project)
     {
 //        dd("show");
-        return $user->team_id == $project->team_id;
+//        return $user->team_id == $project->team_id;
+        return $project->users->contains($user);
     }
+
+
 }

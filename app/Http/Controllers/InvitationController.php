@@ -49,7 +49,7 @@ class InvitationController extends Controller
     {
         //
     }
-    
+
     public function destroy(Invitation $invitation)
     {
 
