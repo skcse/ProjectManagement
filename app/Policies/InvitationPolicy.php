@@ -20,5 +20,5 @@ class InvitationPolicy
     {
         return $user->role == 1;
     }
-    
+
 }

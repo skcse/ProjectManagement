@@ -10,18 +10,6 @@ use Illuminate\Http\Request;
 
 class InvitationController extends Controller
 {
-
-    public function index()
-    {
-        //
-    }
-
-
-    public function create()
-    {
-
-    }
-
     public function store(Project $project, User $user, Request $request)
     {
         $this->authorize('create',Invitation::class);
@@ -33,26 +21,6 @@ class InvitationController extends Controller
         $invite->save();
         \Mail::to($user)->send(new Welcome);
         return "Invited!!";
-    }
-
-    public function show(Invitation $invitation)
-    {
-        //
-    }
-
-    public function edit(Invitation $invitation)
-    {
-        //
-    }
-
-    public function update(Request $request, Invitation $invitation)
-    {
-        //
-    }
-
-    public function destroy(Invitation $invitation)
-    {
-
     }
 
     public function accept_invitation(Invitation $invitation)
