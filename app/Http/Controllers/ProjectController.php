@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Projectmember;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -40,10 +41,12 @@ class ProjectController extends Controller
         $this->authorize('create',Project::class);
         $auth = $request->validate([
             'name'=> 'required',
+            'description'=>'required'
         ]);
         $project = new Project([
             'name'=> $auth['name'],
-            'team_id'=> $user->team_id
+            'team_id'=> $user->team_id,
+            'description' =>$auth['description']
         ]);
         $project->save();
         return "Project Created!";
@@ -57,7 +60,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-//        $this->authorize('show',$project);
+        $this->authorize('view',$project);
+        return $project;
     }
 
     /**
@@ -82,7 +86,8 @@ class ProjectController extends Controller
     {
         $this->authorize('update',$project);
         $auth =$request->validate([
-           'name'=>'required'
+           'name'=>'required',
+            'description'=>'required'
         ]);
         $project->update($auth);
         return "Project details Update!";
@@ -101,10 +106,15 @@ class ProjectController extends Controller
 
     public function addMember(Project $project, Request $request)
     {
+        $user=auth()->user();
         $this->authorize('addMember',$project);
+
         $auth = $request->validate([
             'user_id'=> 'required'
         ]);
+        $user_add = User::findOrFail($auth['user_id']);
+        if($user->team_id != $user_add->team_id)
+            return redirect('/api/invite/' . $project->id . '/' . $auth['user_id']);
         $project->users()->attach($auth['user_id']);
         return "member added";
     }

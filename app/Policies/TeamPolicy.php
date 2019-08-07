@@ -94,11 +94,14 @@ class TeamPolicy
 
     public function showMember(User $user, Team $team)
     {
-//        dd("show<MM");
+        if($user->role==2)
+            return true;
         return $user->team_id == $team->id;
     }
     public function showProject(User $user, Team $team)
     {
+        if($user->role==2)
+            return true;
         return $user->team_id == $team->id;
     }
 }

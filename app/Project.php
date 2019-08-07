@@ -15,8 +15,9 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class);
     }
-    public function inviations()
+    public function invitations()
     {
-        return $this->belongsToMany(Invitation::class, 'project_id', 'id');
+        return $this->hasMany(Invitation::class, 'project_id', 'id');
     }
+
 }

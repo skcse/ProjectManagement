@@ -38,12 +38,12 @@ class TeamController extends Controller
     {
         $this->authorize('create',Team::class);
         $auth = $request->validate([
-            'teamName' =>'required',
+            'name' =>'required',
             'leadUser_id' =>'required',
         ]);
         $team = new Team;
         $team->create($auth);
-        return "Team Created!!";
+        return "Team Created!! ";
     }
 
     /**

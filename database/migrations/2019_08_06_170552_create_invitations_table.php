@@ -18,7 +18,7 @@ class CreateInvitationsTable extends Migration
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('receiver_id')->unsigned();
             $table->bigInteger('project_id')->unsigned();
-            $table->boolean('status')->default(false);
+            $table->string('status')->default("pending");
             $table->timestamps();
         });
     }

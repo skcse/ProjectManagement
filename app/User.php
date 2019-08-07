@@ -44,10 +44,10 @@ class User extends Authenticatable
     }
     public function invited()
     {
-        return $this->belongsToMany(Invitation::class,'sender_id','id');
+        return $this->hasMany(Invitation::class,'sender_id','id');
     }
-    public function invitation()
+    public function invitations()
     {
-        return $this->belongsToMany(Invitation::class,'receiver_id','id');
+        return $this->hasMany(Invitation::class,'receiver_id','id');
     }
 }

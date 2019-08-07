@@ -21,7 +21,6 @@ class ProjectPolicy
     }
     public function create(User $user)
     {
-//        dd("hi project");
         return $user->role == 1;
     }
     public function update(User $user, Project $project)
@@ -38,7 +37,8 @@ class ProjectPolicy
     }
     public function view(User $user, Project $project)
     {
-
+//        dd("hi");
+        return $user->team_id == $project->team_id;
     }
     public function addMember(User $user, Project $project)
     {

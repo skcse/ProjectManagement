@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Welcome;
 use App\User;
+use App\Invitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,7 +22,7 @@ class UserController extends Controller
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
         $user->save();
-        return "User Registered";
+        return "User Registered- " . $user->name;
     }
 
     public function update(Request $request, User $user)
@@ -49,5 +50,18 @@ class UserController extends Controller
         $projects=  $user->projects;
         $projectsName = $projects->map->only(['name']);
         return $projectsName;
+    }
+
+    public function invitations(User $user)
+    {
+        $this->authorize('view',$user);
+        $invitations = $user->invitations;
+        return $invitations;
+    }
+    public function invited()
+    {
+        $user = auth()->user();
+        $invited = $user->invited;
+        return $invited;
     }
 }

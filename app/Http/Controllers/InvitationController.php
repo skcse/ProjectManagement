@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Invitation;
+use App\Mail\Welcome;
+use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 
 class InvitationController extends Controller
@@ -24,7 +27,7 @@ class InvitationController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -33,9 +36,16 @@ class InvitationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Project $project, User $user, Request $request)
     {
-        //
+        $invite = new Invitation();
+//        dd($user->id);
+        $invite->receiver_id = $user->id;
+        $invite->sender_id = auth()->user()->id;
+        $invite->project_id = $project->id;
+        $invite->save();
+        \Mail::to($user)->send(new Welcome);
+        return "Invited!!";
     }
 
     /**
